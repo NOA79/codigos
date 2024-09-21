@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="listadeHector" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar/Ocultar Box</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://www.dropbox.com/scl/fi/1d6zpzuw4hgigzqqnp6lu/internet-3116062_1280-removebg-preview-wDmV4b3r6-transformed.jpeg?rlkey=8ayqaeswcpqegn2njk52gwg55&st=fnbd668m&raw=1');
+            background-size: cover;
+        }
+        .box {
+            display: none;
+            font-family: "Vibur", cursive;
+            padding: 70px;
+            border-radius: 50px;
+            width: 300px;
+            animation: appear 1s forwards;
+            position: relative;
+            overflow: hidden; 
+        }
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .box h1 {
+            font-size: 50px;
+            margin-bottom: 40px;
+            color: #ece1de;
+            animation: neon 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes neon {
+            from {
+                text-shadow:
+                    0 0 10px rgba(255, 100, 0, 0.92), 
+                    0 0 50px rgba(255, 165, 0, 0.34), 
+                    0 0 20px rgba(255, 20, 147, 0.52), 
+                    0 0 30px rgba(255, 20, 147, 0.92),
+                    0 0 50px rgba(255, 69, 0, 0.78), 
+                    0 0 80px rgba(255, 69, 0, 0.92);
+            }
+            to {
+                text-shadow:
+                    0 0 6px rgba(255, 100, 0, 0.98),
+                    0 0 30px rgba(255, 165, 0, 0.42),
+                    0 0 12px rgba(255, 20, 147, 0.58),
+                    0 0 22px rgba(255, 20, 147, 0.84),
+                    0 0 38px rgba(255, 69, 0, 0.88),
+                    0 0 60px rgba(255, 69, 0, 1);
+            }
+        }
+        .box.active {
+            display: block;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #cf903c;
+            font-family: "Vibur", cursive;
+            font-size: 18px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: scale(1.1);
+            background-color: #e97456; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
+            outline: none; 
+            box-shadow: 0 0 0 2px rgba(214, 137, 118, 0.5); 
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        li {
+            background-color: #e0e0e0;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li.completed {
+            text-decoration: line-through;
+            background-color: #e26748;
+        }
+        .remove-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .add-btn {
+            background-color: #eb926f;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .add-btn1 {
+            background: none;
+            color: white;
+            border: none;
+            width: 60px;
+            height: 40px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-image: url('https://www.dropbox.com/scl/fi/n7zmwv3gj7n64an43b6i4/1-removebg-preview.png?rlkey=6lmeku77ke9jspqq89kp3tgyn&st=q0xl8m6r&raw=1');
+            background-size: contain;
+            background-repeat: no-repeat;
+            float: right;
+        }
+        .add-btn2 {
+            background: none;
+            color: white;
+            border: none;
+            width: 60px;
+            height: 40px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-image: url('https://www.dropbox.com/scl/fi/uf5s7u22g8dka85xwxxar/2-removebg-preview.png?rlkey=sdjot7952y3c6gvd30v9zftim&st=dgzs2g6f&raw=1');
+            background-size: contain;
+            background-repeat: no-repeat;
+            float: right;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #f3d4c8;
+        }
+        .celebration {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .celebration.show {
+            display: block;
+            color: #e66216;
+        }
+        .counter {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .results {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+        .results ul {
+            padding: 0;
+            list-style-type: none;
+        }
+        .results li {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .results li.completed {
+            background-color: #d88853;
+            text-decoration: line-through;
+        }
+        .results li.pending {
+            background-color: #f9a825;
+        }
+        .box2-section {
+            margin-top: 20px;
+        }
+        .box2-section ul {
+            padding: 0;
+            list-style-type: none;
+        }
+        .box2-section li {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .box2-section li.completed {
+            background-color: #eb9a81;
+            text-decoration: line-through;
+        }
+        .box2-section li.pending {
+            background-color: #eb9a81;
+        }
+        .box2-section button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box1" class="box active">
+        <video class="background-video" autoplay muted loop>
+            <source src="https://www.dropbox.com/scl/fi/ukw9820qqa6f9wrhiewf7/fondo-gif.mp4?rlkey=4vkp68c2fi6kpopk89dqi34b3&st=3lezwdwj&raw=1" type="video/mp4">
+        </video>
+        <h1>My Activities</h1>
+        <ul id="task-list"></ul>
+        <input type="text" id="new-task" placeholder="Nueva actividad...">
+        <button class="add-btn" onclick="addTask()">Agregar actividad</button>
+        <div class="celebration" id="victory-message" style="color: rgb(248, 248, 248);">¡Todas las actividades completadas!</div>
+        <div class="counter" id="task-counter" style="color: rgb(252, 252, 252);" >Total: 0 | Completadas: 0 | Pendientes: 0</div>
+        <button class="add-btn" onclick="mostrarBox('box2')">Mostrar Resultados</button>
+    </div>
+
+    <div id="box2" class="box">
+        <video class="background-video" autoplay muted loop>
+            <source src="https://www.dropbox.com/scl/fi/ukw9820qqa6f9wrhiewf7/fondo-gif.mp4?rlkey=4vkp68c2fi6kpopk89dqi34b3&st=3lezwdwj&raw=1" type="video/mp4">
+        </video>
+        <div id="completion-message" style="color: rgb(248, 248, 248); text-align: center; margin-bottom: 10px;"></div>
+        <h1>Resultados</h1>
+        <div class="box2-section" style="color: rgb(248, 248, 248);">
+            <h2>Tareas Pendientes</h2>
+            <ul id="pending-tasks"></ul>
+        </div>
+        <div class="box2-section" style="color: rgb(248, 248, 248);">
+            <h2>Tareas Completadas</h2>
+            <ul id="completed-tasks"></ul>
+        </div>
+        <button class="add-btn" onclick="mostrarBox('box1')">Regresar</button>
+    </div>
+    <script>
+        function generateId() {
+            return 'task-' + Date.now();
+        }
+    
+        function mostrarBox(idBox) {
+            document.querySelectorAll('.box').forEach(box => {
+                box.classList.remove('active');
+            });
+    
+            document.getElementById(idBox).classList.add('active');
+    
+            if (idBox === 'box2') {
+                updateResults();
+            }
+        }
+    
+        const taskList = document.getElementById('task-list');
+        const taskCounter = document.getElementById('task-counter');
+    
+        function addTask() {
+            const taskText = document.getElementById('new-task').value;
+            if (taskText.trim() === '') {
+                return;
+            }
+            const taskId = generateId();
+            const li = document.createElement('li');
+            li.textContent = taskText;
+            li.id = taskId;
+            li.dataset.completed = 'false';
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Eliminar';
+            removeBtn.className = 'remove-btn';
+            removeBtn.onclick = removeTask;
+            li.appendChild(removeBtn);
+    
+            taskList.appendChild(li);
+            document.getElementById('new-task').value = '';
+    
+            updateCounters();
+            checkVictory();
+        }
+    
+        function removeTask(event) {
+            event.target.parentElement.remove();
+            updateCounters();
+            checkVictory();
+        }
+    
+        function toggleComplete(event) {
+            const li = event.target;
+            li.classList.toggle('completed');
+            li.dataset.completed = li.classList.contains('completed') ? 'true' : 'false';
+            updateCounters();
+            checkVictory();
+        }
+    
+        function checkVictory() {
+            const tasks = document.querySelectorAll('#task-list li');
+            const completedTasks = document.querySelectorAll('#task-list li.completed');
+            const victoryMessage = document.getElementById('victory-message');
+    
+            if (tasks.length > 0 && tasks.length === completedTasks.length) {
+                victoryMessage.classList.add('show');
+            } else {
+                victoryMessage.classList.remove('show');
+            }
+        }
+    
+        function updateCounters() {
+            const tasks = document.querySelectorAll('#task-list li');
+            const completedTasks = document.querySelectorAll('#task-list li.completed');
+            const pendingTasks = tasks.length - completedTasks.length;
+    
+            taskCounter.textContent = `Total: ${tasks.length} | Completadas: ${completedTasks.length} | Pendientes: ${pendingTasks}`;
+        }
+    
+        function updateResults() {
+            const pendingTasks = document.getElementById('pending-tasks');
+            const completedTasks = document.getElementById('completed-tasks');
+    
+            pendingTasks.innerHTML = ''; 
+            completedTasks.innerHTML = ''; 
+    
+            const tasks = document.querySelectorAll('#task-list li');
+            tasks.forEach(task => {
+                const taskItem = document.createElement('li');
+                taskItem.textContent = task.textContent.replace('Eliminar', '').trim();
+                taskItem.dataset.id = task.id;
+    
+                const completeBtn = document.createElement('button');
+                completeBtn.className = 'add-btn2';
+                completeBtn.onclick = () => moveTask(taskItem, 'completed');
+    
+                const pendingBtn = document.createElement('button');
+                pendingBtn.className = 'add-btn1';
+                pendingBtn.onclick = () => moveTask(taskItem, 'pending');
+    
+                taskItem.appendChild(completeBtn);
+                taskItem.appendChild(pendingBtn);
+    
+                if (task.classList.contains('completed')) {
+                    taskItem.className = 'completed';
+                    completedTasks.appendChild(taskItem);
+                } else {
+                    taskItem.className = 'pending';
+                    pendingTasks.appendChild(taskItem);
+                }
+            });
+    
+            updateMessage();
+        }
+    
+        function moveTask(taskItem, status) {
+            const targetList = status === 'completed' ? document.getElementById('completed-tasks') : document.getElementById('pending-tasks');
+            const sourceList = status === 'completed' ? document.getElementById('pending-tasks') : document.getElementById('completed-tasks');
+    
+            taskItem.className = status;
+            targetList.appendChild(taskItem);
+    
+            const originalTask = document.getElementById(taskItem.dataset.id);
+            if (originalTask) {
+                originalTask.classList.toggle('completed', status === 'completed');
+                originalTask.dataset.completed = status === 'completed' ? 'true' : 'false';
+            }
+    
+            updateCounters();
+            updateMessage();
+        }
+    
+        function updateMessage() {
+            const completedTasks = document.querySelectorAll('#completed-tasks li').length;
+            const messageElement = document.createElement('div');
+            const existingMessage = document.getElementById('task-message');
+    
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+    
+            messageElement.id = 'task-message';
+            messageElement.style.color = 'rgb(248, 248, 248)';
+    
+            if (completedTasks <= 4) {
+                messageElement.textContent = 'Faltan muchas tareas por completar';
+            } else if (completedTasks >= 5 && completedTasks <= 9) {
+                messageElement.textContent = 'Ya casi completas las actividades';
+            } else if (completedTasks >= 10) {
+                messageElement.textContent = 'Límite de actividades completado';
+            }
+    
+            const box2Section = document.querySelector('#box2 .box2-section');
+            box2Section.insertAdjacentElement('afterend', messageElement);
+        }
+    </script>    
+   
+</body>
+</html>
